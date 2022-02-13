@@ -1,18 +1,26 @@
+using System;
+
 using UnityEngine;
 
 public class Player: MonoBehaviour
 {
+    public static Player player;
+    
     public Rigidbody2D rb;
 
     public float speed;
     public float jumpForce;
 
+    [ReadOnly]
     public bool grounded;
 
+    void Awake() {
+        player = this;
+    }
+
     void FixedUpdate() {
-        var hit = Physics2D.Raycast(transform.position, Vector2.down, transform.lossyScale.y + 0.1f, LayerMask.GetMask("Walkable"));
-        grounded = hit;
-        print(hit.collider);
+        grounded = Physics2D.Raycast(transform.position, Vector2.down, transform.lossyScale.y + 0.1f,
+                                     LayerMask.GetMask("Walkable"));
         
         if (grounded)
         {

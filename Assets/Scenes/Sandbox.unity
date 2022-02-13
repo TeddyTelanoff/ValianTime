@@ -216,6 +216,7 @@ GameObject:
   m_Component:
   - component: {fileID: 535008771}
   - component: {fileID: 535008772}
+  - component: {fileID: 535008773}
   m_Layer: 0
   m_Name: Bomber
   m_TagString: Untagged
@@ -259,6 +260,25 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &535008773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 535008770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cc211b59ec81af4e8d5cc953005b77d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 535008772}
+  bomb: {fileID: 0}
+  sightRange: 30
+  shootRange: 7
+  speed: 2
+  adjust: 0.8
+  grounded: 0
 --- !u!1 &1006223034
 GameObject:
   m_ObjectHideFlags: 0
@@ -327,7 +347,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 1006223036}
   speed: 88
-  jumpForce: 1200
+  jumpForce: 1337
   grounded: 0
 --- !u!1 &1462384802
 GameObject:
