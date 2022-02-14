@@ -10,27 +10,56 @@ public class Bomber: MonoBehaviour
     public float sightRange;
     public float shootRange;
     public float speed;
+    public float reload;
+    public float pewpew;
 
-    public float adjust;
-    
+    [ReadOnly]
+    public float cooldown;
     [ReadOnly]
     public bool grounded;
 
     void FixedUpdate() {
-        grounded = Physics2D.Raycast(transform.position, Vector2.down, transform.lossyScale.y + 0.1f,
+        grounded = Physics2D.Raycast(transform.position, Vector2.down, 5f,
                                      LayerMask.GetMask("Walkable"));
+
+        rb.freezeRotation = grounded;
         if (grounded)
+        {
             rb.SetRotation(Quaternion.identity);
-        
+        }
+
         float dist = Vector2.Distance(Player.player.transform.position, transform.position);
         if (dist < sightRange)
         {
-            Vector2 dir = Player.player.transform.position - transform.position;
-            dir.Normalize();
+            float dir = Mathf.Sign(Player.player.transform.position.x - transform.position.x);
+            if (dist < shootRange)
+            {
+                cooldown -= Time.deltaTime;
+                if (cooldown < 0)
+                    Shoot(dir);
+                return;
+            }
+            
             dir *= speed;
             dir *= Time.deltaTime;
 
-            transform.position += (Vector3) dir;
+            rb.velocity = new Vector2(dir, rb.velocity.y);
         }
+    }
+
+    public void Shoot(float dir) {
+        cooldown = reload;
+            
+        var obj = Instantiate(bomb);
+        obj.transform.position = transform.position;
+        
+        obj.GetComponent<Rigidbody2D>().AddForce(new Vector2(dir * pewpew, 0), ForceMode2D.Impulse);
+    }
+
+    void OnDrawGizmosSelected() {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, sightRange);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, shootRange);
     }
 }

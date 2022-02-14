@@ -19,7 +19,7 @@ public class Player: MonoBehaviour
     }
 
     void FixedUpdate() {
-        grounded = Physics2D.Raycast(transform.position, Vector2.down, transform.lossyScale.y + 0.1f,
+        grounded = Physics2D.Raycast(transform.position, Vector2.down, 3.1f,
                                      LayerMask.GetMask("Walkable"));
         
         if (grounded)
