@@ -29,7 +29,10 @@ public class Bomb: MonoBehaviour
 
 		foreach (Collider2D impact in impacts)
 		{
-			var rb = impact.GetComponentInParent<Rigidbody2D>();
+			if (impact.gameObject == gameObject)
+				continue;
+
+			var rb = impact.attachedRigidbody;
 			if (rb)
 				rb.AddExplosionForce(force, transform.position, radius);
 		}

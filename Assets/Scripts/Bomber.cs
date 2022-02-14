@@ -19,14 +19,12 @@ public class Bomber: MonoBehaviour
     public bool grounded;
 
     void FixedUpdate() {
-        grounded = Physics2D.Raycast(transform.position, Vector2.down, 5f,
+        grounded = Physics2D.Raycast(transform.position, Vector2.down, transform.lossyScale.y + 0.1f,
                                      LayerMask.GetMask("Walkable"));
 
         rb.freezeRotation = grounded;
         if (grounded)
-        {
             rb.SetRotation(Quaternion.identity);
-        }
 
         float dist = Vector2.Distance(Player.player.transform.position, transform.position);
         if (dist < sightRange)
@@ -51,7 +49,7 @@ public class Bomber: MonoBehaviour
         cooldown = reload;
             
         var obj = Instantiate(bomb);
-        obj.transform.position = transform.position;
+        obj.transform.position = transform.position + new Vector3(transform.lossyScale.x * dir, 0);
         
         obj.GetComponent<Rigidbody2D>().AddForce(new Vector2(dir * pewpew, 0), ForceMode2D.Impulse);
     }
